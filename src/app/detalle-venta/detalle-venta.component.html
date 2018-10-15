@@ -1,0 +1,13 @@
+<div *ngIf="venta">
+  <h1>{{venta1.objeto | uppercase}}</h1>
+  <label>
+    Costo: 
+    <input type="number" [(ngModel)]="venta.costo">
+  </label> <br/>
+  <label>
+    Cantidad: 
+    <input type="number" [(ngModel)]="venta.cantidad">
+  </label> <br/>
+  Total: {{venta.costo * venta.cantidad}} <br/>
+  Fecha de venta: {{venta.fecha | date : 'short'}}
+</div>

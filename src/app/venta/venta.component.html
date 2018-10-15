@@ -1,3 +1,40 @@
-<p>
-  venta works!
-</p>
+<h2>Ventas</h2>
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" align="right">
+        Cantidad
+      </th>
+      <th>
+        Total
+      </th>
+      <th>
+        Fecha de Venta
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let venta of ventas" (click)="onSelect(venta)" [class.selected] = "venta1 === venta">
+      <td>
+        {{venta.objeto}}
+      </td>
+      <td>
+        {{venta.cantidad}}
+      </td>
+      <td>
+        {{venta.cantidad * venta.costo | currency}}
+      </td>
+      <td>
+        {{venta.fecha | date : "short"}}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <td colspan="2">
+      Total de Ventas:
+    </td>
+    <td>
+      {{totalVentas | currency}}
+    </td>
+  </tfoot>
+</table>
