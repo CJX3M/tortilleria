@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { venta } from '../venta';
-import { VENTAS } from '../ventas';
+import { Venta } from '../venta';
+import { VentaService } from '../venta.service';
 
 @Component({
   selector: 'app-venta',
@@ -9,19 +9,24 @@ import { VENTAS } from '../ventas';
 })
 export class VentaComponent implements OnInit {
 
-  venta1: venta;
+  venta1: Venta;
 
-  ventas = VENTAS;
+  ventas: Venta[];
 
-  totalVentas = VENTAS.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
+  totalVentas: number;
 
-  onSelect(_venta: venta): void {
+  onSelect(_venta: Venta): void {
     this.venta1 = _venta;
   }
 
-  constructor() { }
+  constructor(private ventaService: VentaService) { }
 
-  ngOnInit() {    
+  ngOnInit() {
+    this.obtenerVentas();
   }
 
+  obtenerVentas(): void {
+    this.ventas = this.ventaService.getVentas();
+    this.totalVentas = this.ventas.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
+  }
 }

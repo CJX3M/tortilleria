@@ -1,7 +1,7 @@
-export class venta {
+export class Venta {
     id: string;
     objeto: string;
     fecha: any;
-    cantidad: number=0;
+    cantidad: number;
     costo: number;
 }
