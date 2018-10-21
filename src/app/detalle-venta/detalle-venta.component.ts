@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Venta } from '../venta';
+import { VentaService } from '../venta.service';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-detalle-venta',
@@ -10,9 +15,23 @@ export class DetalleVentaComponent implements OnInit {
 
   @Input() venta: Venta;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private ventaService: VentaService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.obtenerVenta();
+  }
+
+  obtenerVenta(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.ventaService.getVenta(id).subscribe(venta => this.venta = venta)
+  }
+
+  regresar(): void {
+    this.router.navigate(['ventas'])
   }
 
 }

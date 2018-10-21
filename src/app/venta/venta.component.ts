@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../venta';
 import { VentaService } from '../venta.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-venta',
@@ -15,18 +16,21 @@ export class VentaComponent implements OnInit {
 
   totalVentas: number;
 
-  onSelect(_venta: Venta): void {
-    this.venta1 = _venta;
+  onSelect(ventaId: number): void {
+    this.router.navigate(['detalle',ventaId])
   }
 
-  constructor(private ventaService: VentaService) { }
+  constructor(
+    private ventaService: VentaService, 
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.obtenerVentas();
   }
 
   obtenerVentas(): void {
-    this.ventas = this.ventaService.getVentas();
+    this.ventaService.getVentas().subscribe(ventas => this.ventas = ventas);
     this.totalVentas = this.ventas.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
   }
 }

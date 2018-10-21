@@ -1,4 +1,4 @@
-<div *ngIf="venta">
+<div>
   <h1>{{venta.objeto | uppercase}}</h1>
   <label>
     Costo: 
@@ -11,3 +11,4 @@
   Total: {{venta.costo * venta.cantidad}} <br/>
   Fecha de venta: {{venta.fecha | date : 'short'}}
 </div>
+<button (click)='regresar()'>Regresar</button>
