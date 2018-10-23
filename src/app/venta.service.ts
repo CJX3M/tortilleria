@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Venta } from './venta';
-import { VENTAS } from './ventas';
-
-import {Observable, of } from 'rxjs';
+import { api } from './api/'
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +11,14 @@ export class VentaService {
   constructor() { }
 
   getVentas(): Observable<Venta[]> {
-    return of(VENTAS);
+    return of(api.obtenerVentas());
   }
 
   getVenta(id: string): Observable<Venta> {
-    return of(VENTAS.find(v => v.id === id))
+    return of(api.obtenerVenta(id));
+  }
+
+  guardarVenta(venta: Venta): void {
+    api.guardarVenta(venta);
   }
 }

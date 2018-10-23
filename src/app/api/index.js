@@ -12,6 +12,41 @@ var config = {
   };
   firebase.initializeApp(config);
 
-export class api {
-    
+  firebase.auth().signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });
+  
+  var logedUser = {};
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    logedUser = user;
+  } else {
+  }
+});
+
+var database = firebase.database();
+
+const api = {
+    obtenerVentas: () => database.ref().child('ventas'),
+    obtenerVenta: (id) => {
+      return database.ref(`ventas/${id}`).once("value", (snap) => {
+        return snap.val();
+      })
+    },
+    guardarVenta: (venta) => {
+      venta.id = database.ref().child('ventas').push().key;
+      venta.fecha = new Date();
+      actualizarVenta(venta.id, venta);
+    },
+    actualizarVenta: (id, venta) => {
+      var updates = {};
+      updates[`/ventas/${id}`] = venta;
+      database.ref().update(updates);
+    }
 }
+
+module.exports = api;
