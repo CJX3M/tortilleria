@@ -26,8 +26,11 @@ export class DetalleVentaComponent implements OnInit {
   }
 
   obtenerVenta(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.ventaService.getVenta(id).subscribe(venta => this.venta = venta)
+    const id = this.route.snapshot.paramMap.get('id');    
+    this.ventaService.getVenta(id).then(_venta => {
+      console.log(_venta);
+      this.venta = _venta      
+    });
   }
 
   regresar(): void {

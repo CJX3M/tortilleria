@@ -1,0 +1,10 @@
+<div>
+  <label>Objeto:
+    <input [(ngModel)]="venta.objeto" placeholder="tortilla/frijoles">
+  </label>
+  <label>Cantidad:
+    <input [(ngModel)]="venta.cantidad" placeholder="0" type="number">
+  </label>  
+</div>
+<button (click)="guardar()">Guardar</button>
+<button (click)="regresar()">Regresar</button>

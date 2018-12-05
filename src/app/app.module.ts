@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { VentaComponent } from './venta/venta.component';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import { AppRoutingModule } from './app-routing.module';
+import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VentaComponent,
-    DetalleVentaComponent
+    DetalleVentaComponent,
+    GenerarVentaComponent
   ],
   imports: [
     BrowserModule,

@@ -31,16 +31,23 @@ firebase.auth().onAuthStateChanged(function(user) {
 var database = firebase.database();
 
 const api = {
-    obtenerVentas: () => database.ref().child('ventas'),
+    obtenerVentas: () => {
+      console.log("obtenerVentas");
+      return database.ref('ventas/').orderByChild('fecha').once('value').then((snap) => {
+        return snap.val();
+      });
+    },
     obtenerVenta: (id) => {
-      return database.ref(`ventas/${id}`).once("value", (snap) => {
+      console.log("id detalle", id);
+      return database.ref(`ventas/${id}`).once("value").then((snap) => {        
         return snap.val();
       })
     },
     guardarVenta: (venta) => {
       venta.id = database.ref().child('ventas').push().key;
       venta.fecha = new Date();
-      actualizarVenta(venta.id, venta);
+      venta.costo = venta.objeto === 'tortillas' ? 10 : 15;
+      api.actualizarVenta(venta.id, venta);
     },
     actualizarVenta: (id, venta) => {
       var updates = {};
@@ -49,4 +56,4 @@ const api = {
     }
 }
 
-module.exports = api;
+export { api };

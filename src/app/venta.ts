@@ -3,5 +3,5 @@ export class Venta {
     objeto: string;
     fecha: any;
     cantidad: number;
-    costo: number;
+    costo: number;    
 }
