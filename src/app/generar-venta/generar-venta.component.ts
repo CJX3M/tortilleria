@@ -12,27 +12,33 @@ import { Router } from '@angular/router';
 })
 export class GenerarVentaComponent implements OnInit {
 
-  @Input() venta: Venta = {
-    id: '0',
-    objeto: '',
-    cantidad: 0,
-    costo: 0,
-    fecha: new Date()
-  };
+  @Input() venta: Venta;
 
   constructor(
     private ventaService: VentaService, 
-    private router: Router
-  ) { }
+    private router: Router    
+  ) { 
+    this.nuevaVenta();
+  }
 
   ngOnInit() {
   }
 
   guardar(): void {
-    this.ventaService.guardarVenta(this.venta);
+    this.ventaService.guardarVenta(this.venta).then(() => this.nuevaVenta());
   }
 
   regresar(): void {
     this.router.navigate(['ventas'])
+  }
+
+  nuevaVenta() {
+    this.venta = {
+      id: '0',
+      objeto: '',
+      cantidad: 0,
+      costo: 0,
+      fecha: new Date()
+    } 
   }
 }

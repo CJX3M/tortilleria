@@ -47,12 +47,12 @@ const api = {
       venta.id = database.ref().child('ventas').push().key;
       venta.fecha = new Date();
       venta.costo = venta.objeto === 'tortillas' ? 10 : 15;
-      api.actualizarVenta(venta.id, venta);
+      return api.actualizarVenta(venta.id, venta);
     },
     actualizarVenta: (id, venta) => {
       var updates = {};
       updates[`/ventas/${id}`] = venta;
-      database.ref().update(updates);
+      return database.ref().update(updates);
     }
 }
 

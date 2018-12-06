@@ -18,7 +18,7 @@ export class VentaService {
     return api.obtenerVenta(id);
   }
 
-  guardarVenta(venta: Venta): void {
-    api.guardarVenta(venta);
+  guardarVenta(venta: Venta) {
+    return api.guardarVenta(venta);
   }
 }
