@@ -12,6 +12,8 @@ export class VentaComponent implements OnInit {
 
   venta1: Venta;
 
+  ventasOrigen: Venta[];
+
   ventas: Venta[];
 
   totalVentas: number;
@@ -30,10 +32,13 @@ export class VentaComponent implements OnInit {
   }
 
   obtenerVentas(): void {
-    //this.ventaService.getVentas().subscribe(ventas => this.ventas = ventas);
     this.ventaService.getVentas().then(ventas => {
-      this.ventas = Object.values(ventas);
+      this.ventasOrigen = this.ventas = Object.values(ventas);
       this.totalVentas = this.ventas.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
     });
+  }
+
+  nueva(): void {
+    this.router.navigate(['nueva'])
   }
 }

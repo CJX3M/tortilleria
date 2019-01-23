@@ -1,10 +1,20 @@
 <div>
-  <label>Objeto:
+  <!-- <label>Objeto:
     <input [(ngModel)]="venta.objeto" placeholder="tortilla/frijoles">
-  </label>
-  <label>Cantidad:
-    <input [(ngModel)]="venta.cantidad" placeholder="0" type="number">
-  </label>  
+  </label> -->
+  <div class="btn-group" btnRadioGroup [(ngModel)] = "venta.objeto" *ngIf="venta.objeto === ''">
+    <label class="btn btn-primary" btnRadio="tortilla" uncheckable tabindex="0" role="button">Tortilla</label>
+    <label class="btn btn-primary" btnRadio="frijol" uncheckable tabindex="0" role="button">Frijol</label>
+  </div>
+  <div class="form-group" *ngIf="venta.objeto !== ''">
+    <label for="ventaCantidad">Cantidad:</label>
+    <input id="ventaCantidad" class="form-control" [(ngModel)]="venta.cantidad" type="number">
+  </div>
+  <!-- <div class="form-group" *ngIf="venta.objeto !== ''">
+    <label for="ventaFecha" class="form-group" >Fecha:</label>
+    <input id="ventaFecha" class="form-control" [(ngModel)]="venta.fecha" type="date">
+  </div> -->
+  <br/>
+  <button type="button" class="btn btn-primary" *ngIf="venta.objeto !== '' && venta.cantidad > 0" (click)="guardar()">Guardar</button>
+  <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
 </div>
-<button (click)="guardar()">Guardar</button>
-<button (click)="regresar()">Regresar</button>

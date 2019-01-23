@@ -46,7 +46,7 @@ const api = {
     guardarVenta: (venta) => {
       venta.id = database.ref().child('ventas').push().key;
       venta.fecha = new Date();
-      venta.costo = venta.objeto === 'tortillas' ? 10 : 15;
+      venta.costo = venta.objeto === 'tortilla' ? 10 : 15;
       return api.actualizarVenta(venta.id, venta);
     },
     actualizarVenta: (id, venta) => {

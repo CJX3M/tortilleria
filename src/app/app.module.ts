@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { ButtonsModule } from 'ngx-bootstrap/buttons'
+
 import { AppComponent } from './app.component';
 import { VentaComponent } from './venta/venta.component';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
@@ -18,7 +20,8 @@ import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ButtonsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent, VentaComponent]
