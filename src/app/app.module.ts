@@ -9,13 +9,17 @@ import { VentaComponent } from './venta/venta.component';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
+import { VentaGraficaComponent } from './venta-grafica/venta-grafica.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VentaComponent,
     DetalleVentaComponent,
-    GenerarVentaComponent
+    GenerarVentaComponent,
+    VentaGraficaComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

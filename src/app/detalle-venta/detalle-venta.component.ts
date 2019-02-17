@@ -15,6 +15,8 @@ export class DetalleVentaComponent implements OnInit {
 
   @Input() venta: Venta;
 
+  mostrarCargando: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -23,6 +25,7 @@ export class DetalleVentaComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerVenta();
+    this.mostrarCargando = false;
   }
 
   obtenerVenta(): void {
@@ -31,6 +34,14 @@ export class DetalleVentaComponent implements OnInit {
       console.log(_venta);
       this.venta = _venta      
     });
+  }
+  
+  actualizar(): void {
+    this.mostrarCargando = true;
+    this.ventaService.actualizarVenta(this.venta).then(() => {
+      this.mostrarCargando = false;
+      this.regresar();
+    })
   }
 
   regresar(): void {

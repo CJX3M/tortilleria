@@ -33,7 +33,7 @@ var database = firebase.database();
 const api = {
     obtenerVentas: () => {
       console.log("obtenerVentas");
-      return database.ref('ventas/').orderByChild('fecha').once('value').then((snap) => {
+      return database.ref('ventas/').once('value').then((snap) => {
         return snap.val();
       });
     },
@@ -47,11 +47,11 @@ const api = {
       venta.id = database.ref().child('ventas').push().key;
       venta.fecha = new Date();
       venta.costo = venta.objeto === 'tortilla' ? 10 : 15;
-      return api.actualizarVenta(venta.id, venta);
+      return api.actualizarVenta(venta);
     },
-    actualizarVenta: (id, venta) => {
+    actualizarVenta: (venta) => {
       var updates = {};
-      updates[`/ventas/${id}`] = venta;
+      updates[`/ventas/${venta.id}`] = venta;
       return database.ref().update(updates);
     }
 }

@@ -21,4 +21,8 @@ export class VentaService {
   guardarVenta(venta: Venta) {
     return api.guardarVenta(venta);
   }
+
+  actualizarVenta(venta: Venta) {
+    return api.actualizarVenta(venta);
+  }
 }

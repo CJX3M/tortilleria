@@ -14,6 +14,8 @@ export class GenerarVentaComponent implements OnInit {
 
   @Input() venta: Venta;
 
+  mostrarCargando: boolean;
+
   constructor(
     private ventaService: VentaService, 
     private router: Router    
@@ -25,6 +27,7 @@ export class GenerarVentaComponent implements OnInit {
   }
 
   guardar(): void {
+    this.mostrarCargando = true;
     this.ventaService.guardarVenta(this.venta).then(() => this.nuevaVenta());
   }
 
@@ -39,6 +42,7 @@ export class GenerarVentaComponent implements OnInit {
       cantidad: 0,
       costo: 0,
       fecha: new Date()
-    } 
+    }
+    this.mostrarCargando = false;
   }
 }

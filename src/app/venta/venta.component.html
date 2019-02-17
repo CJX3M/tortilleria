@@ -1,9 +1,20 @@
 <h2>Ventas</h2>
 <button type="button" class="btn btn-primary" (click)="nueva()" >Nueva</button>
-<table>
+<div class="form-group">
+  <label>Agrupar por:</label>
+  <div class="btn-group" role="group" aria-label="">
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('todo')">Todo</button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('dia')">Día</button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('mes')">Mes</button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('año')">Año</button>
+  </div>
+</div>
+<div class="container-fluid" style="max-height:500px; overflow:auto">
+<table *ngIf="!agrupado" class="col-sm-12">
   <thead>
     <tr>
-      <th colspan="2" align="right">
+      <th></th>
+      <th>
         Cantidad
       </th>
       <th>
@@ -39,3 +50,60 @@
     </td>
   </tfoot>
 </table>
+<table *ngIf='agrupado' class="col-sm-12">
+  <ng-container *ngFor="let grupo of ventasAgrupado">
+    <tr>
+      <td>
+        <span class="col-sm-1" (click)="grupo.show = !grupo.show"><i class="far fa-plus-square" *ngIf="!grupo.show"></i><i class="far fa-minus-square" *ngIf="grupo.show"></i></span>
+        <span class="col-sm-5">{{grupo.group}}</span>
+        <span class="col-sm-2">Tortillas: {{grupo.totalTortillas}}</span>
+        <span class="col-sm-2">Frijoles: {{grupo.totalFrijoles}}</span>
+        <span class="col-sm-2">Total: {{grupo.total | currency}}</span>
+      </td>
+    </tr>
+    <tr *ngIf="grupo.show">
+      <table class="col-sm-12">
+          <thead>
+              <tr>
+                <th></th>
+                <th align="right">
+                  Cantidad
+                </th>
+                <th>
+                  Total
+                </th>
+                <th>
+                  Fecha de Venta
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let venta of grupo.array" (click)="onSelect(venta.id)">
+                <td>
+                  {{venta.objeto}}
+                </td>
+                <td>
+                  {{venta.cantidad}}
+                </td>
+                <td>
+                  {{venta.cantidad * venta.costo | currency}}
+                </td>
+                <td>
+                  {{venta.fecha | date : "short"}}
+                </td>
+              </tr>
+            </tbody>
+      </table>
+    </tr>
+  </ng-container>
+  <tfoot>
+      <td colspan="2">
+        Total de Ventas:
+      </td>
+      <td>
+        {{totalVentas | currency}}
+      </td>
+  </tfoot>
+</table>
+</div>
+<app-loading [show]='mostrarCargando'></app-loading>

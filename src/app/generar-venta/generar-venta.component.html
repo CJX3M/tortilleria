@@ -15,6 +15,6 @@
     <input id="ventaFecha" class="form-control" [(ngModel)]="venta.fecha" type="date">
   </div> -->
   <br/>
-  <button type="button" class="btn btn-primary" *ngIf="venta.objeto !== '' && venta.cantidad > 0" (click)="guardar()">Guardar</button>
+  <button type="button" class="btn btn-primary" *ngIf="venta.objeto !== '' && venta.cantidad > 0" (click)="guardar()">Guardar</button><app-loading [show]='mostrarCargando'></app-loading>
   <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
 </div>
