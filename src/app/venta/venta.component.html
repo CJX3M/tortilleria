@@ -9,101 +9,53 @@
     <button class="btn btn-secondary btn-sm" (click)="agruparVenta('año')">Año</button>
   </div>
 </div>
-<div class="container-fluid" style="max-height:500px; overflow:auto">
-<table *ngIf="!agrupado" class="col-sm-12">
-  <thead>
-    <tr>
-      <th></th>
-      <th>
-        Cantidad
-      </th>
-      <th>
-        Total
-      </th>
-      <th>
-        Fecha de Venta
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let venta of ventas" (click)="onSelect(venta.id)">
-      <td>
-        {{venta.objeto}}
-      </td>
-      <td>
-        {{venta.cantidad}}
-      </td>
-      <td>
-        {{venta.cantidad * venta.costo | currency}}
-      </td>
-      <td>
-        {{venta.fecha | date : "short"}}
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <td colspan="2">
-      Total de Ventas:
-    </td>
-    <td>
-      {{totalVentas | currency}}
-    </td>
-  </tfoot>
-</table>
-<table *ngIf='agrupado' class="col-sm-12">
-  <ng-container *ngFor="let grupo of ventasAgrupado">
-    <tr>
-      <td>
-        <span class="col-sm-1" (click)="grupo.show = !grupo.show"><i class="far fa-plus-square" *ngIf="!grupo.show"></i><i class="far fa-minus-square" *ngIf="grupo.show"></i></span>
-        <span class="col-sm-5">{{grupo.group}}</span>
-        <span class="col-sm-2">Tortillas: {{grupo.totalTortillas}}</span>
-        <span class="col-sm-2">Frijoles: {{grupo.totalFrijoles}}</span>
-        <span class="col-sm-2">Total: {{grupo.total | currency}}</span>
-      </td>
-    </tr>
-    <tr *ngIf="grupo.show">
-      <table class="col-sm-12">
-          <thead>
-              <tr>
-                <th></th>
-                <th align="right">
-                  Cantidad
-                </th>
-                <th>
-                  Total
-                </th>
-                <th>
-                  Fecha de Venta
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let venta of grupo.array" (click)="onSelect(venta.id)">
-                <td>
-                  {{venta.objeto}}
-                </td>
-                <td>
-                  {{venta.cantidad}}
-                </td>
-                <td>
-                  {{venta.cantidad * venta.costo | currency}}
-                </td>
-                <td>
-                  {{venta.fecha | date : "short"}}
-                </td>
-              </tr>
-            </tbody>
-      </table>
-    </tr>
-  </ng-container>
-  <tfoot>
-      <td colspan="2">
-        Total de Ventas:
-      </td>
-      <td>
-        {{totalVentas | currency}}
-      </td>
-  </tfoot>
-</table>
+<div class="container-fluid">
+  <div *ngIf="!agrupado">
+    <div id="tableHeader" class="row">
+      <div class="col"></div>
+      <div class="col">Cantidad</div>
+      <div class="col">Total</div>
+      <div class="col">Venta</div>
+    </div>
+    <div id="tableBody" style="max-height:300px; overflow:auto">
+      <div *ngFor="let venta of ventas" class="row" (click)="onSelect(venta.id)">
+        <div class="col">{{venta.objeto}}</div>
+        <div class="col">{{venta.cantidad}}</div>
+        <div class="col">{{venta.cantidad * venta.costo | currency}}</div>
+        <div class="col">{{venta.fecha | date : "short"}}</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="agrupado" style="max-height:300px; overflow:auto">
+    <ng-container *ngFor="let grupo of ventasAgrupado">
+      <div class="row">
+        <span class="col-1" (click)="grupo.show = !grupo.show"><i class="far fa-plus-square" *ngIf="!grupo.show"></i><i class="far fa-minus-square" *ngIf="grupo.show"></i></span>
+        <span class="col">{{grupo.group}}</span>
+        <span class="col">Tortillas: {{grupo.totalTortillas}}</span>
+        <span class="col">Frijoles: {{grupo.totalFrijoles}}</span>
+        <span class="col">Total: {{grupo.total | currency}}</span>
+      </div>
+      <div *ngIf="grupo.show">
+        <div id="tableHeader" class="row">
+          <div class="col"></div>
+          <div class="col">Cantidad</div>
+          <div class="col">Total</div>
+          <div class="col">Venta</div>
+        </div>
+        <div id="tableBody" style="max-height:200px; overflow:auto">
+          <div *ngFor="let venta of grupo.array" class="row" (click)="onSelect(venta.id)">
+            <div class="col">{{venta.objeto}}</div>
+            <div class="col">{{venta.cantidad}}</div>
+            <div class="col">{{venta.cantidad * venta.costo | currency}}</div>
+            <div class="col">{{venta.fecha | date : "short"}}</div>
+          </div>
+        </div>
+      </div>
+    </ng-container>  
+  </div>
+  <div id="tableFooter" class="row">
+    <div class="col">Total Ventas</div>
+    <div class="col">{{totalVentas | currency}}</div>
+  </div>
 </div>
 <app-loading [show]='mostrarCargando'></app-loading>
