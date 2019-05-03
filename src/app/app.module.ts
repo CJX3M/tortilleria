@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
 import { VentaGraficaComponent } from './venta-grafica/venta-grafica.component';
 import { LoadingComponent } from './loading/loading.component';
+import { ProduccionDiaComponent } from './produccion-dia/produccion-dia.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LoadingComponent } from './loading/loading.component';
     DetalleVentaComponent,
     GenerarVentaComponent,
     VentaGraficaComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProduccionDiaComponent
   ],
   imports: [
     BrowserModule,

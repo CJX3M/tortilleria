@@ -25,4 +25,20 @@ export class VentaService {
   actualizarVenta(venta: Venta) {
     return api.actualizarVenta(venta);
   }
+
+  guardarProduccion(produccion: any) {
+    return api.guardarProduccion(produccion);
+  }
+
+  actualizarProduccion(produccion: any) {
+    return api.actualizarProduccion(produccion);
+  }
+
+  buscarProduccionDia(dia: string) {
+    return api.buscarProduccionDia(dia);
+  }
+
+  buscarProducciones() {
+    return api.buscarProducciones();
+  }
 }

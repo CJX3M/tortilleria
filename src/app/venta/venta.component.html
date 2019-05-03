@@ -32,8 +32,9 @@
         <span class="col-1" (click)="grupo.show = !grupo.show"><i class="far fa-plus-square" *ngIf="!grupo.show"></i><i class="far fa-minus-square" *ngIf="grupo.show"></i></span>
         <span class="col">{{grupo.group}}</span>
         <span class="col">Tortillas: {{grupo.totalTortillas}}</span>
+        <span class="col">Sobraron: {{grupo.sobraron}}</span>
         <span class="col">Frijoles: {{grupo.totalFrijoles}}</span>
-        <span class="col">Total: {{grupo.total | currency}}</span>
+        <span class="col" title="{{grupo.inversion  | currency}}">Total: {{grupo.total - grupo.inversion | currency}}</span>
       </div>
       <div *ngIf="grupo.show">
         <div id="tableHeader" class="row">
@@ -56,6 +57,14 @@
   <div id="tableFooter" class="row">
     <div class="col">Total Ventas</div>
     <div class="col">{{totalVentas | currency}}</div>
+  </div>
+  <div id="tableFooter" class="row">
+    <div class="col">Total Invertido</div>
+    <div class="col">{{totalInversion | currency}}</div>
+  </div>
+  <div id="tableFooter" class="row">
+    <div class="col">Ganancia</div>
+    <div class="col">{{totalVentas - totalInversion | currency}}</div>
   </div>
 </div>
 <app-loading [show]='mostrarCargando'></app-loading>

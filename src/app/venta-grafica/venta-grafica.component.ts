@@ -30,13 +30,13 @@ export class VentaGraficaComponent implements OnInit {
   }
 
   obtenerVentas(): void {    
-    this.ventaService.getVentas().then(ventas => {      
+    this.ventaService.getVentas().then((ventas: any) => {      
       this.ventasOrigen = _.orderBy(Object.values(ventas), 'fecha', 'desc');
       this.ventasSemana();
     });
   }
 
-  mostrarGrafica(tipo): void {
+  mostrarGrafica(tipo: string): void {
     switch(tipo) {
       case 'semanal':
         this.ventasSemana();

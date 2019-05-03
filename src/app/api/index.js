@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 // Initialize Firebase
 // TODO: Replace with your project's customized code snippet
@@ -10,16 +12,17 @@ var config = {
     storageBucket: "tortilleria-35f9c.appspot.com",
     messagingSenderId: "143484736391"
   };
-  firebase.initializeApp(config);
 
-  firebase.auth().signInAnonymously().catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ...
-  });
-  
-  var logedUser = {};
+firebase.initializeApp(config);
+
+firebase.auth().signInAnonymously().catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+
+var logedUser = {};
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -32,13 +35,11 @@ var database = firebase.database();
 
 const api = {
     obtenerVentas: () => {
-      console.log("obtenerVentas");
       return database.ref('ventas/').once('value').then((snap) => {
         return snap.val();
       });
     },
     obtenerVenta: (id) => {
-      console.log("id detalle", id);
       return database.ref(`ventas/${id}`).once("value").then((snap) => {        
         return snap.val();
       })
@@ -53,6 +54,39 @@ const api = {
       var updates = {};
       updates[`/ventas/${venta.id}`] = venta;
       return database.ref().update(updates);
+    },
+    obtenerProduccionDia: () => {
+      return database.ref('produccionDia/').once('value').then((snap) => {
+        return snap.val();
+      })
+    },
+    guardarProduccion: (produccion) => {
+      if (produccion.id === '0') {
+        produccion.id = database.ref().child('produccionDia').push().key;
+        produccion.fecha = new Date();
+      }
+      return api.actualizarProduccion(produccion);
+    },
+    actualizarProduccion: (produccion) => {
+      var updates = {};
+      updates[`/produccionDia/${produccion.id}`] = produccion;
+      return database.ref().update(updates);
+    },
+    buscarProduccionDia: (dia) => {
+      return database.ref(`produccionDia/`).once('value').then((snap) => {
+        return api.buscarProducciones();
+      }).then((prods) => {
+        var res = _.filter(prods, (d) => moment(d.fecha).format('DDMMYYYY') === dia)
+        if (res.length > 0) {
+          return res[0];
+        }
+        return null;
+      });
+    },
+    buscarProducciones: () => {
+      return database.ref('produccionDia/').once('value').then((snap) => {
+        return snap.val();
+      });
     }
 }
 

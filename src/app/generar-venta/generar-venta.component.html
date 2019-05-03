@@ -2,7 +2,7 @@
   <!-- <label>Objeto:
     <input [(ngModel)]="venta.objeto" placeholder="tortilla/frijoles">
   </label> -->
-  <div class="btn-group" btnRadioGroup [(ngModel)] = "venta.objeto" *ngIf="venta.objeto === ''">
+  <div class="btn-group" btnRadioGroup [(ngModel)] = "venta.objeto">
     <label class="btn btn-primary" btnRadio="tortilla" uncheckable tabindex="0" role="button">Tortilla</label>
     <label class="btn btn-primary" btnRadio="frijol" uncheckable tabindex="0" role="button">Frijol</label>
   </div>
