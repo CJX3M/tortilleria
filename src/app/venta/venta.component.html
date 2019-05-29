@@ -1,12 +1,19 @@
 <h2>Ventas</h2>
-<button type="button" class="btn btn-primary" (click)="nueva()" >Nueva</button>
 <div class="form-group">
   <label>Agrupar por:</label>
   <div class="btn-group" role="group" aria-label="">
-    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('todo')">Todo</button>
-    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('dia')">Día</button>
-    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('mes')">Mes</button>
-    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('año')">Año</button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('todo')">
+      Todo
+    </button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('dia')">
+      Día
+    </button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('mes')">
+      Mes
+    </button>
+    <button class="btn btn-secondary btn-sm" (click)="agruparVenta('año')">
+      Año
+    </button>
   </div>
 </div>
 <div class="container-fluid">
@@ -18,23 +25,32 @@
       <div class="col">Venta</div>
     </div>
     <div id="tableBody" style="max-height:300px; overflow:auto">
-      <div *ngFor="let venta of ventas" class="row" (click)="onSelect(venta.id)">
-        <div class="col">{{venta.objeto}}</div>
-        <div class="col">{{venta.cantidad}}</div>
-        <div class="col">{{venta.cantidad * venta.costo | currency}}</div>
-        <div class="col">{{venta.fecha | date : "short"}}</div>
+      <div
+        *ngFor="let venta of ventas"
+        class="row"
+        (click)="onSelect(venta.id)"
+      >
+        <div class="col">{{ venta.objeto }}</div>
+        <div class="col">{{ venta.cantidad }}</div>
+        <div class="col">{{ venta.cantidad * venta.costo | currency }}</div>
+        <div class="col">{{ venta.fecha | date: "short" }}</div>
       </div>
     </div>
   </div>
   <div *ngIf="agrupado" style="max-height:300px; overflow:auto">
     <ng-container *ngFor="let grupo of ventasAgrupado">
       <div class="row">
-        <span class="col-1" (click)="grupo.show = !grupo.show"><i class="far fa-plus-square" *ngIf="!grupo.show"></i><i class="far fa-minus-square" *ngIf="grupo.show"></i></span>
-        <span class="col">{{grupo.group}}</span>
-        <span class="col">Tortillas: {{grupo.totalTortillas}}</span>
-        <span class="col">Sobraron: {{grupo.sobraron}}</span>
-        <span class="col">Frijoles: {{grupo.totalFrijoles}}</span>
-        <span class="col" title="{{grupo.inversion  | currency}}">Total: {{grupo.total - grupo.inversion | currency}}</span>
+        <span class="col-1" (click)="grupo.show = !grupo.show"
+          ><i class="far fa-plus-square" *ngIf="!grupo.show"></i
+          ><i class="far fa-minus-square" *ngIf="grupo.show"></i
+        ></span>
+        <span class="col">{{ grupo.group }}</span>
+        <span class="col">Tortillas: {{ grupo.totalTortillas }}</span>
+        <span class="col">Sobraron: {{ grupo.sobraron }}</span>
+        <span class="col">Frijoles: {{ grupo.totalFrijoles }}</span>
+        <span class="col" title="{{ grupo.inversion | currency }}"
+          >Total: {{ grupo.total - grupo.inversion | currency }}</span
+        >
       </div>
       <div *ngIf="grupo.show">
         <div id="tableHeader" class="row">
@@ -44,27 +60,31 @@
           <div class="col">Venta</div>
         </div>
         <div id="tableBody" style="max-height:200px; overflow:auto">
-          <div *ngFor="let venta of grupo.array" class="row" (click)="onSelect(venta.id)">
-            <div class="col">{{venta.objeto}}</div>
-            <div class="col">{{venta.cantidad}}</div>
-            <div class="col">{{venta.cantidad * venta.costo | currency}}</div>
-            <div class="col">{{venta.fecha | date : "short"}}</div>
+          <div
+            *ngFor="let venta of grupo.array"
+            class="row"
+            (click)="onSelect(venta.id)"
+          >
+            <div class="col">{{ venta.objeto }}</div>
+            <div class="col">{{ venta.cantidad }}</div>
+            <div class="col">{{ venta.cantidad * venta.costo | currency }}</div>
+            <div class="col">{{ venta.fecha | date: "short" }}</div>
           </div>
         </div>
       </div>
-    </ng-container>  
+    </ng-container>
   </div>
   <div id="tableFooter" class="row">
     <div class="col">Total Ventas</div>
-    <div class="col">{{totalVentas | currency}}</div>
+    <div class="col">{{ totalVentas | currency }}</div>
   </div>
   <div id="tableFooter" class="row">
     <div class="col">Total Invertido</div>
-    <div class="col">{{totalInversion | currency}}</div>
+    <div class="col">{{ totalInversion | currency }}</div>
   </div>
   <div id="tableFooter" class="row">
     <div class="col">Ganancia</div>
-    <div class="col">{{totalVentas - totalInversion | currency}}</div>
+    <div class="col">{{ totalVentas - totalInversion | currency }}</div>
   </div>
 </div>
-<app-loading [show]='mostrarCargando'></app-loading>
+<app-loading [show]="mostrarCargando"></app-loading>

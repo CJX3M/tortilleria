@@ -1,15 +1,26 @@
 <div>
-  <h1>{{venta.objeto | uppercase}}</h1>
+  <h1>{{ venta.objeto | uppercase }}</h1>
   <div class="form-group">
     <label for="costo">Costo:</label>
-    <input id="costo" class="form-control" type="number" [(ngModel)]="venta.costo">
+    <input
+      id="costo"
+      class="form-control"
+      type="number"
+      [(ngModel)]="venta.costo"
+    />
   </div>
   <div class="form-group">
     <label for="cantidad">Cantidad:</label>
-    <input id="cantidad" class="form-control" type="number" [(ngModel)]="venta.cantidad">
+    <input
+      id="cantidad"
+      class="form-control"
+      type="number"
+      [(ngModel)]="venta.cantidad"
+    />
   </div>
-  Total: {{venta.costo * venta.cantidad}} <br/>
-  Fecha de venta: {{venta.fecha | date : 'short'}}
+  Total: {{ venta.costo * venta.cantidad }} <br />
+  Fecha de venta: {{ venta.fecha | date: "short" }}
 </div>
-<button type="button" class="btn btn-primary" (click)='actualizar()'>Actualizar</button><app-loading [show]='mostrarCargando'></app-loading>
-<button type="button" class="btn btn-secondary" (click)='regresar()'>Regresar</button>
+<button type="button" class="btn btn-primary" (click)="actualizar()">
+  Actualizar</button
+><app-loading [show]="mostrarCargando"></app-loading>

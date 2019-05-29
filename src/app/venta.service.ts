@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Venta } from './venta';
-import { api } from './api'
-import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Venta } from "./venta";
+import { api } from "./api";
+import { Observable, of } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class VentaService {
-
-  constructor() { }
+  constructor() {}
 
   getVentas() {
     return api.obtenerVentas();
