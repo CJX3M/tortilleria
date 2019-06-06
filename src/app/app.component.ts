@@ -7,11 +7,18 @@ import { Router } from "@angular/router";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  title = "Tortillería!!!!";
+  title:string = "Tortillería!!!!";
+
+  isCollapsed:boolean = true;
 
   constructor(private router: Router) {}
 
   mover(pagina: string): void {
+    this.isCollapsed = true;
     this.router.navigate([pagina]);
+  }
+
+  isActive(pagina: string) : boolean {
+    return window.location.pathname.indexOf(pagina) !== -1;
   }
 }
