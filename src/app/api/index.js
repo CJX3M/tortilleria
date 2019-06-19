@@ -53,12 +53,23 @@ const api = {
         return snap.val();
       });
   },
+  obtenerVentasSemana: (inicio, fin) => {
+    return database
+    .ref("ventas/")
+    .orderByChild('fecha')
+    .startAt(inicio)
+    .endAt(fin)
+    .once("value")
+    .then(snap => {
+        return snap.val();
+    })
+  },
   guardarVenta: venta => {
     venta.id = database
       .ref()
       .child("ventas")
       .push().key;
-    venta.fecha = new Date();
+    venta.fecha = (new Date()).getTime();
     venta.costo = venta.objeto === "tortilla" ? 10 : 15;
     return api.actualizarVenta(venta);
   },
@@ -81,7 +92,7 @@ const api = {
         .ref()
         .child("produccionDia")
         .push().key;
-      produccion.fecha = new Date();
+      produccion.fecha = (new Date()).getTime();
     }
     return api.actualizarProduccion(produccion);
   },
@@ -91,12 +102,7 @@ const api = {
     return database.ref().update(updates);
   },
   buscarProduccionDia: dia => {
-    return database
-      .ref(`produccionDia/`)
-      .once("value")
-      .then(snap => {
-        return api.buscarProducciones();
-      })
+    return api.buscarProducciones()
       .then(prods => {
         var res = _.filter(
           prods,
@@ -115,6 +121,17 @@ const api = {
       .then(snap => {
         return snap.val();
       });
+  },
+  buscarProduccionSemana: (inicio, fin) => {
+    return database
+    .ref("produccionDia/")
+    .orderByChild('fecha')
+    .startAt(inicio)
+    .endAt(fin)
+    .once("value")
+    .then(snap => {
+        return snap.val();
+    });
   }
 };
 

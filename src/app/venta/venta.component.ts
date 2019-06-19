@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Venta } from '../venta';
 import { VentaService } from '../venta.service';
 import { Router } from '@angular/router';
+
+import { IDateRange } from 'ng-pick-daterange';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -14,26 +16,21 @@ import * as moment from 'moment';
 export class VentaComponent implements OnInit {
 
   venta1: Venta;
-
   ventasOrigen: Venta[];
-
   ventas: Venta[];
-
   ventasAgrupado: any;
-
   grupoContraido: boolean[];
-
   totalVentas: number;
-
   agrupado: boolean;
-
+  factorGrupo: string;
   mostrarCargando: boolean;
-
   produccionOrigen: any;
-
   produccionAgrupado: any;
-
   totalInversion: number;
+
+  @Input() private dateRange: IDateRange;
+
+  semanaVentas: IDateRange;
 
   onSelect(ventaId: string): void {
     this.router.navigate(['detalle', ventaId])
@@ -44,35 +41,54 @@ export class VentaComponent implements OnInit {
     private router: Router
     ) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     moment.locale('es');
     this.mostrarCargando = true;
     this.totalInversion = 0;
+    this.semanaVentas = Object.assign({}, this.semanaVentas, this.dateRange);
+    this.semanaVentas.from = moment().add(-7, 'days').toDate();
+    this.semanaVentas.to = moment().add(1, 'days').toDate();
     this.obtenerVentas();
     this.obtenerProduccion();
   }
 
-  obtenerVentas(): void {
-    this.ventaService.getVentas().then(ventas => {
+  obtenerVentas(): any {
+    return this.ventaService.getVentaSemana(this.semanaVentas.from.getTime(), this.semanaVentas.to.getTime()).then(ventas => {
       this.ventasOrigen = this.ventas = _.orderBy(Object.values(ventas), 'fecha', 'desc');
       this.totalVentas = this.ventas.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
       this.mostrarCargando = false;
+      return Promise.resolve();
+    });
+  }
+
+  actualizarVentas(dateRange: IDateRange): any {
+    this.semanaVentas = dateRange;
+    this.obtenerVentas()
+    .then(() => {
+      return this.obtenerProduccion();
+    })
+    .then(() => {
+      if (this.agrupado)
+        this.agruparVenta(this.factorGrupo);
     });
   }
 
   obtenerProduccion(): void {
-    this.ventaService.buscarProducciones().then(produccion => {
+    return this.ventaService.getProduccionSemana(this.semanaVentas.from.getTime(), this.semanaVentas.to.getTime()).then(produccion => {
+      this.totalInversion = 0;
       this.produccionOrigen = _.orderBy(Object.values(produccion), 'fecha', 'desc');
       this.mostrarCargando = false;
       _.each(this.produccionOrigen, (p) => {
         this.totalInversion += p.inversion.map(m => m.costo).reduce((m, m1) => m + m1);
       });
+      return Promise.resolve();
     });
   }
 
   agruparVenta(tipo): void {
     this.agrupado = true;
     this.mostrarCargando = true;
+    this.factorGrupo = tipo;
     let agrupado;
     switch(tipo) {
       case "dia":        
@@ -108,9 +124,5 @@ export class VentaComponent implements OnInit {
         }
       });      
     }
-  }
-
-  nueva(): void {
-    this.router.navigate(['nueva'])
   }
 }

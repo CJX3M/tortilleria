@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
+import { DateRangePickerModule } from 'ng-pick-daterange';
 
 import { AppComponent } from './app.component';
 import { VentaComponent } from './venta/venta.component';
@@ -27,7 +28,8 @@ import { ProduccionDiaComponent } from './produccion-dia/produccion-dia.componen
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    DateRangePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent, VentaComponent]

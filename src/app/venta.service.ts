@@ -17,6 +17,10 @@ export class VentaService {
     return api.obtenerVenta(id);
   }
 
+  getVentaSemana(inicio: number, fin: number) {
+    return api.obtenerVentasSemana(inicio, fin);
+  }
+
   guardarVenta(venta: Venta) {
     return api.guardarVenta(venta);
   }
@@ -39,5 +43,9 @@ export class VentaService {
 
   buscarProducciones() {
     return api.buscarProducciones();
+  }
+
+  getProduccionSemana(inicio: number, fin: number) {
+    return api.buscarProduccionSemana(inicio, fin);
   }
 }

@@ -14,6 +14,12 @@
     <button class="btn btn-secondary btn-sm" (click)="agruparVenta('año')">
       Año
     </button>
+  </div>  
+</div>
+<div>
+  <label>Período</label>
+  <div>
+    <app-date-range [(dateRange)]="semanaVenta" (dateRangeChange)="actualizarVentas($event)"></app-date-range>
   </div>
 </div>
 <div class="container-fluid">
