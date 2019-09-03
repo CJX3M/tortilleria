@@ -115,7 +115,7 @@ export class VentaComponent implements OnInit {
         return {
           group: i,
           array: v,
-          total: v.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1),
+          total: v.map(v => v.objeto === 'tortilla' ? v.cantidad * v.costo : 0).reduce((v, v1) => v + v1),
           inversion: inversion,
           totalTortillas: v.filter(v => v.objeto === 'tortilla').length > 0 ? v.filter(v => v.objeto === 'tortilla').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0,
           totalFrijoles:  v.filter(v => v.objeto === 'frijol').length > 0 ? v.filter(v => v.objeto === 'frijol').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0,
