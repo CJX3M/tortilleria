@@ -109,17 +109,22 @@ export class VentaComponent implements OnInit {
     }
     this.mostrarCargando = false;
     if (agrupado) {
-      this.ventasAgrupado = _.map(agrupado, (v, i) => {
+      this.ventasAgrupado = _.map(agrupado, (v, i, index) => {
         let inversion = this.produccionAgrupado[i] ? _.map(this.produccionAgrupado[i], (d) => _.map(d.inversion, (d1) => d1.costo))[0].reduce((v, v1) => v + v1) : 0;
         let cantidad = this.produccionAgrupado[i] ? _.map(this.produccionAgrupado[i], (d) => d.cantidad).reduce((v, v1) => v + v1) : 0;
+        let sobraronAnterior = 0;
+        let sigFecha = moment(i, 'dddd DD/MM/YY').add(-1, 'day').format('dddd DD/MM/YY');
+        if (tipo === 'dia' && agrupado[sigFecha] && this.produccionAgrupado[sigFecha]) {
+          sobraronAnterior = this.produccionAgrupado[sigFecha][0].cantidad - (agrupado[sigFecha].filter(v => v.objeto === 'tortilla').length > 0 ? agrupado[sigFecha].filter(v => v.objeto === 'tortilla').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0)
+        }
         return {
           group: i,
           array: v,
           total: v.map(v => v.objeto === 'tortilla' ? v.cantidad * v.costo : 0).reduce((v, v1) => v + v1),
           inversion: inversion,
-          totalTortillas: v.filter(v => v.objeto === 'tortilla').length > 0 ? v.filter(v => v.objeto === 'tortilla').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0,
+          totalTortillas: (v.filter(v => v.objeto === 'tortilla').length > 0 ? v.filter(v => v.objeto === 'tortilla').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0),
           totalFrijoles:  v.filter(v => v.objeto === 'frijol').length > 0 ? v.filter(v => v.objeto === 'frijol').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0,
-          sobraron: cantidad - (v.filter(v => v.objeto === 'tortilla').length > 0 ? v.filter(v => v.objeto === 'tortilla').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0),
+          sobraron: ((sobraronAnterior > 0 ? sobraronAnterior : 0) + cantidad) - (v.filter(v => v.objeto === 'tortilla').length > 0 ? v.filter(v => v.objeto === 'tortilla').reduce((v, v1) => ({cantidad: v.cantidad + v1.cantidad})).cantidad : 0),
           show: false
         }
       });      
