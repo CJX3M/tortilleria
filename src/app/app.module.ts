@@ -13,6 +13,7 @@ import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
 import { VentaGraficaComponent } from './venta-grafica/venta-grafica.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ProduccionDiaComponent } from './produccion-dia/produccion-dia.component';
+import { InventarioComponent } from './inventario/inventario.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProduccionDiaComponent } from './produccion-dia/produccion-dia.componen
     GenerarVentaComponent,
     VentaGraficaComponent,
     LoadingComponent,
-    ProduccionDiaComponent
+    ProduccionDiaComponent,
+    InventarioComponent
   ],
   imports: [
     BrowserModule,

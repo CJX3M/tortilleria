@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Venta } from "./venta";
-import { api } from "./api";
-import { Observable, of } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Venta } from './venta';
+import { api } from './api';
+
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class VentaService {
   constructor() {}
@@ -47,5 +47,13 @@ export class VentaService {
 
   getProduccionSemana(inicio: number, fin: number) {
     return api.buscarProduccionSemana(inicio, fin);
+  }
+
+  buscarInventario() {
+    return api.buscarInventario();
+  }
+
+  guardarMaterial(material: any) {
+    return api.guardarMaterial(material);
   }
 }

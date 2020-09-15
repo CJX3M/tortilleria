@@ -26,7 +26,7 @@
     "core-js": "^2.5.4",
     "date-fns": "^1.30.1",
     "firebase": "^5.5.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "moment": "^2.24.0",
     "ng-pick-daterange": "^1.0.0",
     "ngx-bootstrap": "^3.1.4",
@@ -35,7 +35,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.0",
+    "@angular-devkit/build-angular": "^0.1001.1",
     "@angular/cli": "^8.0.0",
     "@angular/compiler-cli": "^8.0.0",
     "@angular/language-service": "^8.0.0",

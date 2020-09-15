@@ -132,6 +132,25 @@ const api = {
     .then(snap => {
         return snap.val();
     });
+  },
+  guardarMaterial: (objeto) => {
+    if (objeto.id === "0") {
+      objeto.id = database
+        .ref()
+        .child("objetos")
+        .push().key;      
+    }
+    var updates = {};
+    updates[`/objetos/${objeto.id}`] = objeto;
+    return database.ref().update(updates);
+  },
+  buscarInventario: () => {
+    return database
+      .ref("objetos/")
+      .once("value")
+      .then(snap => {
+        return snap.val();
+      });
   }
 };
 
