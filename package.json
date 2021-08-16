@@ -29,7 +29,6 @@
     "firebase": "^8.9.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "ng-pick-daterange": "^1.0.0",
     "ngx-bootstrap": "^7.0.0",
     "rxjs": "^6.5.5",
     "tslib": "^1.14.1",
