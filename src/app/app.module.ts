@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
-import { DateRangePickerModule } from 'ng-pick-daterange';
+//import { DateRangePickerModule } from 'ng-pick-daterange';
 
 import { AppComponent } from './app.component';
 import { VentaComponent } from './venta/venta.component';
@@ -13,6 +13,7 @@ import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
 import { VentaGraficaComponent } from './venta-grafica/venta-grafica.component';
 import { LoadingComponent } from './loading/loading.component';
 import { ProduccionDiaComponent } from './produccion-dia/produccion-dia.component';
+import { InventarioComponent } from './inventario/inventario.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +23,15 @@ import { ProduccionDiaComponent } from './produccion-dia/produccion-dia.componen
     GenerarVentaComponent,
     VentaGraficaComponent,
     LoadingComponent,
-    ProduccionDiaComponent
+    ProduccionDiaComponent,
+    InventarioComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     ButtonsModule.forRoot(),
-    DateRangePickerModule
+    //DateRangePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent, VentaComponent]

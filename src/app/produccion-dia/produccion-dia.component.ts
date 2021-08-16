@@ -1,31 +1,31 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { VentaService } from "../venta.service";
-import { Router } from "@angular/router";
+import { Component, OnInit, Input } from '@angular/core';
+import { VentaService } from '../venta.service';
+import { Router } from '@angular/router';
 
-import * as _ from "lodash";
-import * as moment from "moment";
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component({
-  selector: "app-produccion-dia",
-  templateUrl: "./produccion-dia.component.html",
-  styleUrls: ["./produccion-dia.component.css"]
+  selector: 'app-produccion-dia',
+  templateUrl: './produccion-dia.component.html',
+  styleUrls: ['./produccion-dia.component.css']
 })
 export class ProduccionDiaComponent implements OnInit {
   @Input() produccion: any;
 
-  mostrarCargando: boolean = false;
+  mostrarCargando = false;
 
   constructor(private ventaService: VentaService, private router: Router) {
     this.nuevaProduccion();
   }
 
   ngOnInit() {
-    moment.locale("es");
+    moment.locale('es');
   }
 
   nuevaProduccion(): void {
     this.produccion = {
-      id: "0",
+      id: '0',
       kilos: 0,
       fecha: new Date(),
       cantidad: 0,
@@ -36,7 +36,7 @@ export class ProduccionDiaComponent implements OnInit {
   }
 
   buscarProduccionDia(): void {
-    var dia = moment().format("DDMMYYYY");
+    const dia = moment().format('DDMMYYYY');
 
     this.ventaService.buscarProduccionDia(dia).then(res => {
       if (res !== null) {
@@ -49,7 +49,7 @@ export class ProduccionDiaComponent implements OnInit {
 
   agregarMaterial(): void {
     this.produccion.inversion.push({
-      objeto: "",
+      objeto: '',
       costo: 0
     });
   }
@@ -69,6 +69,6 @@ export class ProduccionDiaComponent implements OnInit {
   }
 
   regresar(): void {
-    this.router.navigate(["ventas"]);
+    this.router.navigate(['ventas']);
   }
 }

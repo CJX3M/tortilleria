@@ -3,7 +3,7 @@ import { Venta } from '../venta';
 import { VentaService } from '../venta.service';
 import { Router } from '@angular/router';
 
-import { IDateRange } from 'ng-pick-daterange';
+//import { IDateRange } from 'ng-pick-daterange';
 
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -28,9 +28,9 @@ export class VentaComponent implements OnInit {
   produccionAgrupado: any;
   totalInversion: number;
 
-  @Input() private dateRange: IDateRange;
+  //@Input() private dateRange: IDateRange;
 
-  semanaVentas: IDateRange;
+  semanaVentas: any;
 
   onSelect(ventaId: string): void {
     this.router.navigate(['detalle', ventaId])
@@ -45,7 +45,7 @@ export class VentaComponent implements OnInit {
     moment.locale('es');
     this.mostrarCargando = true;
     this.totalInversion = 0;
-    this.semanaVentas = Object.assign({}, this.semanaVentas, this.dateRange);
+    this.semanaVentas = {};
     this.semanaVentas.from = moment().add(-7, 'days').toDate();
     this.semanaVentas.to = moment().add(1, 'days').toDate();
     this.obtenerVentas();
@@ -61,7 +61,7 @@ export class VentaComponent implements OnInit {
     });
   }
 
-  actualizarVentas(dateRange: IDateRange): any {
+  actualizarVentas(dateRange: any): any {
     this.semanaVentas = dateRange;
     this.obtenerVentas()
     .then(() => {

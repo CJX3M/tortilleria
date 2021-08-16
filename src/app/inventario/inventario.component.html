@@ -1,0 +1,42 @@
+<div>
+  <div class="inventarioDetalles" [show]="mostrarDetalles">
+    <div class="form-group">
+      <label for="nombreMaterial">Nombre:</label>
+      <input id="nombreMaterial" class="form-control" [(ngModel)]="material.nombre"/>
+    </div>
+    <div class="form-group">Costo:</label>
+      <input id="costoMaterial" class="form-control" [(ngModel)]="material.costo" type="number"/>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      *ngIf="material.nombre !== '' && material.costo > 0"
+      (click)="guardar()"
+    >
+    Guardar</button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="cancelar()"
+    >
+    Cancelar</button>
+  </div>
+  <div class="tablaInventario" [show]="!mostrarDetalles">
+    <div id="tablaHeader" class="container-fluid">
+      <div class="row">
+        <div class="col-xs-4">Nombre</div>
+        <div class="col-xs-4">Costo</div>
+        <div class="col-xs-4"></div>
+      </div>
+    </div>
+    <div id="tablaCuerpo" class="container-fluid">
+      <div class="row" *ngFor="let material of inventario; let i = index">
+        <div class="col-xs-4">{{ material.nombre }}</div>
+        <div class="col-xs-4">{{ material.costo | currency }}</div>
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-xs btn-primary" (click)="editar(i)">Editar</button>
+        </div>
+    </div>
+  </div>
+  <app-loading [show]="mostrarCargando"></app-loading>
+</div>
