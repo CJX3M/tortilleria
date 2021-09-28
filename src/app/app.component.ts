@@ -1,24 +1,25 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component } from '@angular/core';
+// import { Router } from '@angular/router';
+import { VentaComponent } from './venta/venta.component';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title:string = "Tortillería!!!!";
+  title = 'Tortillería!!!!';
 
-  isCollapsed:boolean = true;
+  // isCollapsed = true;
 
-  constructor(private router: Router) {}
+  // constructor(private router: Router) {}
 
-  mover(pagina: string): void {
-    this.isCollapsed = true;
-    this.router.navigate([pagina]);
-  }
+  // mover(pagina: string): void {
+  //   this.isCollapsed = true;
+  //   this.router.navigate([pagina]);
+  // }
 
-  isActive(pagina: string) : boolean {
-    return window.location.pathname.indexOf(pagina) !== -1;
-  }
+  // isActive(pagina: string): boolean {
+  //   return window.location.pathname.indexOf(pagina) !== -1;
+  // }
 }

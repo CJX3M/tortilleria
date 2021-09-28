@@ -1,10 +1,8 @@
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { Venta } from '../venta';
 import { VentaService } from '../venta.service';
-import { Router } from '@angular/router';
-
-//import { IDateRange } from 'ng-pick-daterange';
-
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -28,60 +26,63 @@ export class VentaComponent implements OnInit {
   produccionAgrupado: any;
   totalInversion: number;
 
-  //@Input() private dateRange: IDateRange;
-
-  semanaVentas: any;
+  semanaVentas = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
 
   onSelect(ventaId: string): void {
-    this.router.navigate(['detalle', ventaId])
   }
 
   constructor(
-    private ventaService: VentaService, 
+    private ventaService: VentaService,
     private router: Router
     ) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     moment.locale('es');
     this.mostrarCargando = true;
     this.totalInversion = 0;
-    this.semanaVentas = {};
-    this.semanaVentas.from = moment().add(-7, 'days').toDate();
-    this.semanaVentas.to = moment().add(1, 'days').toDate();
+    this.semanaVentas = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl()
+    });
+    this.semanaVentas.controls['start'].setValue(moment().add(-7, 'days').toDate());
+    this.semanaVentas.controls['end'].setValue(moment().add(1, 'days').toDate());
     this.obtenerVentas();
     this.obtenerProduccion();
   }
 
-  obtenerVentas(): any {
-    return this.ventaService.getVentaSemana(this.semanaVentas.from.getTime(), this.semanaVentas.to.getTime()).then(ventas => {
-      this.ventasOrigen = this.ventas = _.orderBy(Object.values(ventas), 'fecha', 'desc');
-      this.totalVentas = this.ventas.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
-      this.mostrarCargando = false;
-      return Promise.resolve();
-    });
+  async obtenerVentas() {
+    const ventas = await this.ventaService.getVentaSemana(
+      this.semanaVentas.controls['start'].value.getTime(),
+      this.semanaVentas.controls['end'].value.getTime());
+    this.ventasOrigen = this.ventas = _.orderBy(Object.values(ventas), 'fecha', 'desc');
+    this.totalVentas = this.ventas.map(v => v.cantidad * v.costo).reduce((v, v1) => v + v1);
+    this.mostrarCargando = false;
   }
 
-  actualizarVentas(dateRange: any): any {
-    this.semanaVentas = dateRange;
-    this.obtenerVentas()
-    .then(() => {
-      return this.obtenerProduccion();
-    })
-    .then(() => {
-      if (this.agrupado)
-        this.agruparVenta(this.factorGrupo);
+  async actualizarVentas() {
+    this.semanaVentas =  new FormGroup({
+      start: new FormControl(),
+      end: new FormControl()
     });
+    await this.obtenerVentas();
+    await this.obtenerProduccion();
+    if (this.agrupado) {
+      this.agruparVenta(this.factorGrupo);
+    }
   }
 
-  obtenerProduccion(): void {
-    return this.ventaService.getProduccionSemana(this.semanaVentas.from.getTime(), this.semanaVentas.to.getTime()).then(produccion => {
-      this.totalInversion = 0;
-      this.produccionOrigen = _.orderBy(Object.values(produccion), 'fecha', 'desc');
-      this.mostrarCargando = false;
-      _.each(this.produccionOrigen, (p) => {
-        this.totalInversion += p.inversion.map(m => m.costo).reduce((m, m1) => m + m1);
-      });
-      return Promise.resolve();
+  async obtenerProduccion() {
+    const produccion =  await this.ventaService.getProduccionSemana(
+      this.semanaVentas.controls['start'].value.getTime(),
+      this.semanaVentas.controls['end'].value.getTime());
+    this.totalInversion = 0;
+    this.produccionOrigen = _.orderBy(Object.values(produccion), 'fecha', 'desc');
+    this.mostrarCargando = false;
+    _.each(this.produccionOrigen, (p) => {
+      this.totalInversion += p.inversion.map(m => m.costo).reduce((m, m1) => m + m1);
     });
   }
 
@@ -91,19 +92,19 @@ export class VentaComponent implements OnInit {
     this.factorGrupo = tipo;
     let agrupado;
     switch(tipo) {
-      case "dia":        
+      case 'dia':
         agrupado = _.groupBy(this.ventasOrigen, (i) => moment(i.fecha).format('dddd DD/MM/YY'));
         this.produccionAgrupado = _.groupBy(this.produccionOrigen, (p) => moment(p.fecha).format('dddd DD/MM/YY'));
         break;
-      case "mes":
+      case 'mes':
         agrupado = _.groupBy(this.ventasOrigen, (i) => moment(i.fecha).format('MM/YY'));
         this.produccionAgrupado = _.groupBy(this.produccionOrigen, (p) => moment(p.fecha).format('MM/YY'));
         break;
-      case "año":
+      case 'año':
         agrupado = _.groupBy(this.ventasOrigen, (i) => moment(i.fecha).format('YYYY'));
         this.produccionAgrupado = _.groupBy(this.produccionOrigen, (p) => moment(p.fecha).format('YYYY'));
         break;
-      case "todo":
+      case 'todo':
         this.agrupado = false;
         break;
     }
